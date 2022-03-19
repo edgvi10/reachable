@@ -1,0 +1,21 @@
+{
+  "name": "pingport",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev"
+  },
+  "repository": "https://github.com/edgvi10/pingport.git",
+  "author": "Eduardo Vieira",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "is-reachable": "^5.1.1",
+    "next": "^12.1.0",
+    "nprogress": "^0.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.49.9"
+  }
+}

@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #0070f3;
+}
+
+* { 
+    text-rendering: optimizeLegibility; box-sizing: border-box;
+    scroll-behavior: none;
+    user-select: none;
+    overscroll-behavior-y: contain;
+    // outline: 1px dashed rgba(0, 255, 0, 0.05) !important;
+}
+
+* > *:last-child {margin-bottom: 0;}
+
+html, body, #__next {height: 100%;}
+body { font-family: "Roboto Mono", monospace; scroll-behavior: smooth; }
