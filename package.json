@@ -1,12 +1,12 @@
 {
-  "name": "pingport",
-  "version": "0.0.1",
+  "name": "openport",
+  "version": "0.0.2",
   "scripts": {
     "build": "next build",
     "start": "next start",
     "dev": "next dev"
   },
-  "repository": "https://github.com/edgvi10/pingport.git",
+  "repository": "https://github.com/edgvi10/openport.git",
   "author": "Eduardo Vieira",
   "license": "MIT",
   "dependencies": {
