@@ -19,7 +19,8 @@ export default function MyApp({ Component, pageProps, appProps }) {
             <meta name="theme-color" content="#212121" />
             <meta name="msapplication-navbutton-color" content="#212121" />
 
-            <title>Reachable test</title>
+            <title>Openport - AppHub</title>
+            <meta name="description" content="A tool to test if host and port are public." />
         </Head>
         <Component {...appProps} {...pageProps} />
     </>
