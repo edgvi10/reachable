@@ -41,7 +41,7 @@ export default function HomePage({ host, ...props }) {
             response_data = { ...request_ping_data.target, ...request_ip_data };
             
             setData(response_data);
-            setReachable(response_data.reachable);
+            setReachable(request_ping_data.reachable);
         } catch (error) {
             console.log(error.message);
             setReachable(false);
