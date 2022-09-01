@@ -21,22 +21,33 @@ export default function HomePage({ host, ...props }) {
         setReachableFormData({ ...reachable_form, [key]: value });
     };
 
-    const handleReachableFormSubmit = (e) => {
-        e.preventDefault();
-        toggleLoading(true);
-        setReachable(null);
-        setData(null);
+    const handleReachableFormSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            toggleLoading(true);
+            setReachable(null);
+            setData(null);
+            
+            var response_data = {};
+            
+            const request_ip = await axios.get(`http://ip-api.com/json/${pring_form.host}`,{ timeout: 1000 * 30 });
+            const request_ip_data = request_ip.data;
+            console.log(request_ip_data);
 
-        axios.get(`/api/reachable`, { params: reachable_form, timeout: 1000 * 60 }).then(({ data }) => {
-            console.log(data);
-            setData(data.target);
-            setReachable(data.reachable);
-        }).catch(err => {
-            console.log(err);
+            const request_ping = await axios.get(`/api/ping`, { params: ping_form, timeout: 1000 * 30 });
+            const request_ping_data = request_ping.data;
+            console.log(request_ping_data);
+            
+            response_data = { ...request_ping_data.target, ...request_ip_data };
+            
+            setData(response_data);
+            setReachable(response_data.reachable);
+        } catch (error) {
+            console.log(error.message);
             setReachable(false);
-        }).finally(() => {
+        } finally {
             toggleLoading(false);
-        });
+        }
     };
 
     const [favorites, setFavorites] = useState([]);
@@ -103,8 +114,10 @@ export default function HomePage({ host, ...props }) {
                                 <ul className="list-unstyled">
                                     <li>Reachable: {is_reachable === true ? <b className="badge bg-success">YES</b> : is_reachable === false ? <b className="badge bg-danger">NO</b> : "Unknown"}</li>
                                     <li>Host: {data.host}</li>
+                                    <li>IP: {data.ip ? data.ip : ""}</li>
                                     <li>Port: {data.port}</li>
                                     {data.time && <li>Ping: <b className={`${data.time < 100 ? "text-success" : data.time < 300 ? "text-warning" : "text-danger"}`}>{data.time}ms</b></li>}
+                                    <li>ISP: {data.isp ? data.isp : "Unknown"}</li>
                                 </ul>
 
                                 <button type="button" className="btn btn-info" onClick={saveFavorite}><b>Save</b> <i className="fal fa-heart" /></button>
