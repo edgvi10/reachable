@@ -53,6 +53,7 @@ export default async function (req, res) {
             console.log(`Checking ${protocol}://${host}:${port}`);
             const test_url = `${protocol}://${host}:${port}`;
             const reachable_request = await isReachable(`${test_url}`);
+            console.log({ reachable_request });
             response.reachable = reachable_request;
             response.success = true;
 
@@ -63,27 +64,6 @@ export default async function (req, res) {
                     response.target.time = time;
                 });
             }
-
-            try {
-                const user_provider_request = await axios.get(`https://ip-api.com/json/${user_ip}`);
-                const user_provider_reponse = user_provider_request.data;
-                user_provider_reponse.ip = user_provider_reponse.query;
-                response.target.user_provider = user_provider_reponse;
-            } catch (error) {
-                console.log("Error while fetching user provider");
-                console.log(error.message);
-            }
-
-            try {
-                const target_provider_request = await axios.get(`http://ip-api.com/json/${host}`, { timeout: 1000 * 30 });
-                const target_provider_response = target_provider_request.data;
-                target_provider_response.ip = target_provider_response.query;
-                response.target = { ...response.target, ...target_provider_response };
-
-            } catch (error) {
-                console.log("Error while fetching ip");
-                console.log(error.message);
-            }
         } catch (error) {
             console.log("Error while checking reachability");
             console.log(error.message);
@@ -91,7 +71,30 @@ export default async function (req, res) {
             response.statusCode = 404;
         }
 
-        console.log(response);
+        try {
+            const user_provider_request = await axios.get(`https://ip-api.com/json/${user_ip}`);
+            const user_provider_reponse = user_provider_request.data;
+            console.log({ user_provider_reponse });
+            user_provider_reponse.ip = user_provider_reponse.query;
+            response.target.user_provider = user_provider_reponse;
+        } catch (error) {
+            console.log("Error while fetching user provider");
+            console.log(error.message);
+        }
+
+        try {
+            const target_provider_request = await axios.get(`http://ip-api.com/json/${host}`, { timeout: 1000 * 30 });
+            const target_provider_response = target_provider_request.data;
+            console.log({ target_provider_response });
+            target_provider_response.ip = target_provider_response.query;
+            response.target = { ...response.target, ...target_provider_response };
+
+        } catch (error) {
+            console.log("Error while fetching ip");
+            console.log(error.message);
+        }
+
+        console.log({ response });
         return res.status(response.statusCode || 200).json({ ...response });
     }
 
