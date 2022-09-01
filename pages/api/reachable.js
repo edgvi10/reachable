@@ -4,7 +4,7 @@ export default async function (req, res) {
     console.clear();
     console.log(`${req.method} ${req.url}`);
 
-    const response = {};
+    var response = {};
     response.success = false;
     response.message = "";
 
@@ -37,14 +37,14 @@ export default async function (req, res) {
 
         response.target = { protocol, host, port };
 
-
-        await isReachable(`${protocol}://${host}:${port}`).then(reachable => {
-            response.reachable = reachable;
+        try {
+            const reachable_request = await isReachable(`${protocol}://${host}:${port}`);
+            response.reachable = reachable_request;
             response.success = true;
-        }).catch(err => {
-            console.log(err);
-            response.message = err.message;
-        });
+        } catch (error) {
+            console.log(error.message);
+            response.message = error.message;
+        }
 
         if (response.reachable) {
             var time = new Date().getTime();
@@ -52,6 +52,15 @@ export default async function (req, res) {
                 time = new Date().getTime() - time;
                 response.target.time = time;
             });
+        }
+        
+        try {
+            const request_ip = await axios.get(`http://ip-api.com/json/${pring_form.host}`,{ timeout: 1000 * 30 });
+            const request_ip_data = request_ip.data;
+            console.log(request_ip_data);
+            response = { ...request_ip_data };
+        } catch (error) {
+            console.log(error.message);
         }
 
         return res.status(response.statusCode || 200).json({ ...response });
