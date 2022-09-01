@@ -30,18 +30,18 @@ export default function HomePage({ host, ...props }) {
             
             var response_data = {};
             
-            const request_ip = await axios.get(`http://ip-api.com/json/${pring_form.host}`,{ timeout: 1000 * 30 });
+            const request_ip = await axios.get(`http://ip-api.com/json/${reachable_form.host}`,{ timeout: 1000 * 30 });
             const request_ip_data = request_ip.data;
             console.log(request_ip_data);
 
-            const request_ping = await axios.get(`/api/ping`, { params: ping_form, timeout: 1000 * 30 });
-            const request_ping_data = request_ping.data;
-            console.log(request_ping_data);
+            const request_reachable = await axios.get(`/api/reachable`, { params: reachable_form, timeout: 1000 * 30 });
+            const request_reachable_data = request_reachable.data;
+            console.log(request_reachable_data);
             
-            response_data = { ...request_ping_data.target, ...request_ip_data };
+            response_data = { ...request_reachable_data.target, ...request_ip_data };
             
             setData(response_data);
-            setReachable(request_ping_data.reachable);
+            setReachable(request_reachable_data.reachable);
         } catch (error) {
             console.log(error.message);
             setReachable(false);
