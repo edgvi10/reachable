@@ -107,14 +107,15 @@ export default function HomePage({ host, ...props }) {
                         {data &&
                             <div className="card border p-2">
                                 <ul className="list-unstyled">
-                                    <li>Reachable: {is_reachable === true ? <b className="badge bg-success">YES</b> : is_reachable === false ? <b className="badge bg-danger">NO</b> : "Unknown"}</li>
-                                    <li>Host: {data.host}</li>
-                                    <li>IP: {data.ip ? data.ip : ""}</li>
-                                    <li>Port: {data.port}</li>
-                                    {data.time && <li>Ping: <b className={`${data.time < 100 ? "text-success" : data.time < 300 ? "text-warning" : "text-danger"}`}>{data.time}ms</b></li>}
+                                    <li className=" d-flex flex-row gap-2"><span className="text-nowrap">Reachable:</span> {is_reachable === true ? <b className="badge bg-success">YES</b> : is_reachable === false ? <b className="badge bg-danger">NO</b> : "Unknown"}</li>
+                                    <li className=" d-flex flex-row gap-2"><span className="text-nowrap">Host:</span> {data.host}:{data.port}</li>
+                                    {data.time && <li className="d-flex flex-row gap-2"><span className="text-nowrap">Ping:</span> <b className={`${data.time < 100 ? "text-success" : data.time < 300 ? "text-warning" : "text-danger"}`}>{data.time}ms</b></li>}
 
-                                    <li>Target ISP: {data.isp ? data.isp : "Unknown"}</li>
-                                    <li>User ISP: {data.user_provider ? data.user_provider.isp : "Unknown"}</li>
+                                    <li className="mt-3 d-flex flex-row gap-2"><span className="text-nowrap">Target ISP:</span> {data.isp ? data.isp : "Unknown"}</li>
+                                    <li className=" d-flex flex-row gap-2"><span className="text-nowrap">Target IP:</span> {data.ip ? data.ip : ""}</li>
+
+                                    <li className="mt-3 d-flex flex-row gap-2"><span className="text-nowrap">User ISP:</span> {data.user_provider ? data.user_provider.isp : "Unknown"}</li>
+                                    <li className=" d-flex flex-row gap-2"><span className="text-nowrap">User IP:</span> {data.user_provider ? data.user_provider.ip : "Unknown"}</li>
                                 </ul>
 
                                 <button type="button" className="btn btn-info" onClick={saveFavorite}><b>Save</b> <i className="fal fa-heart" /></button>
