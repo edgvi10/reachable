@@ -27,20 +27,14 @@ export default function HomePage({ host, ...props }) {
             toggleLoading(true);
             setReachable(null);
             setData(null);
-            
+
             var response_data = {};
-            
-            //    const request_ip = await axios.get(`http://ip-api.com/json/${reachable_form.host}`,{ timeout: 1000 * 30 });
-            //    const request_ip_data = request_ip.data;
-            //    console.log(request_ip_data);
-            //    response_data = { ...request_ip_data };
 
             const request_reachable = await axios.get(`/api/reachable`, { params: reachable_form, timeout: 1000 * 30 });
             const request_reachable_data = request_reachable.data;
             console.log(request_reachable_data);
-            
             response_data = { ...request_reachable_data.target };
-            
+
             setData(response_data);
             setReachable(request_reachable_data.reachable);
         } catch (error) {
@@ -118,7 +112,9 @@ export default function HomePage({ host, ...props }) {
                                     <li>IP: {data.ip ? data.ip : ""}</li>
                                     <li>Port: {data.port}</li>
                                     {data.time && <li>Ping: <b className={`${data.time < 100 ? "text-success" : data.time < 300 ? "text-warning" : "text-danger"}`}>{data.time}ms</b></li>}
-                                    <li>ISP: {data.isp ? data.isp : "Unknown"}</li>
+
+                                    <li>Target ISP: {data.isp ? data.isp : "Unknown"}</li>
+                                    <li>User ISP: {data.user_provider ? data.user_provider.isp : "Unknown"}</li>
                                 </ul>
 
                                 <button type="button" className="btn btn-info" onClick={saveFavorite}><b>Save</b> <i className="fal fa-heart" /></button>
