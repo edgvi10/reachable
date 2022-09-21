@@ -82,7 +82,7 @@ export default function HomePage({ host, ...props }) {
         </hgroup>
         <section className="container-fluid py-3">
             <div className="row g-3">
-                <form onSubmit={handleReachableFormSubmit} className="col-12 col-md-4">
+                <form onSubmit={handleReachableFormSubmit} className="col-12 col-lg-4">
                     <fieldset className="d-flex flex-column gap-2">
                         <div className="row g-2">
                             <div className="col-12 col-md-9">
@@ -124,7 +124,7 @@ export default function HomePage({ host, ...props }) {
                     </fieldset>
                 </form>
 
-                <div className="col-12 col-md-4">
+                <div className="col-12 col-md-6 col-lg-4">
                     <div className="card border">
                         <header className="p-3">
                             <h2 className="h4 fw-bold">How to use:</h2>
@@ -137,7 +137,7 @@ export default function HomePage({ host, ...props }) {
                     </div>
                 </div>
 
-                <div className="col-12 col-md-4">
+                <div className="col-12 col-md-6 col-lg-4">
                     <div className="card border d-flex flex-column gap-2">
                         <header className="p-2">
                             <h2 className="h4 fw-bold">Favorites</h2>

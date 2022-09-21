@@ -50,8 +50,8 @@ export default async function (req, res) {
         }
 
         try {
-            console.log(`Checking ${protocol}://${host}:${port}`);
-            const test_url = `${protocol}://${host}:${port}`;
+            console.log(`Checking ${host}:${port}`);
+            const test_url = `${host}:${port}`;
             const reachable_request = await isReachable(`${test_url}`);
             console.log({ reachable_request });
             response.reachable = reachable_request;
@@ -59,7 +59,7 @@ export default async function (req, res) {
 
             if (response.reachable) {
                 var time = new Date().getTime();
-                await isReachable(`${protocol}://${host}:${port}/`).finally(() => {
+                await isReachable(`${host}:${port}`).finally(() => {
                     time = new Date().getTime() - time;
                     response.target.time = time;
                 });
@@ -72,7 +72,7 @@ export default async function (req, res) {
         }
 
         try {
-            const user_provider_request = await axios.get(`https://ip-api.com/json/${user_ip}`);
+            const user_provider_request = await axios.get(`http://ip-api.com/json/${user_ip}`);
             const user_provider_reponse = user_provider_request.data;
             console.log({ user_provider_reponse });
             user_provider_reponse.ip = user_provider_reponse.query;
